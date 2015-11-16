@@ -7,9 +7,9 @@ import lombok.Setter;
 import cn.partner.demo.atomic.demo4atomic.common.Increaser;
 
 /**
- * show concurrent simple i++ bug and use atomic to avoid
+ * compare atomic and simple i++ with synchronized
  */
-public class Demo01 {
+public class Demo02 {
 
     public static void main(String[] args) throws InterruptedException {
         Increaser simpleIncre = new SimpleIncre();
@@ -17,17 +17,10 @@ public class Demo01 {
             new Thread(() -> simpleIncre.work()).start();
         }
 
-        Thread.sleep(500);
-        System.out.println("simpleIncre : " + simpleIncre.getValue());
-
-
         Increaser atomicIncre = new AtomicIncre();
         for (int i = 0; i < 100; i++) {
             new Thread(() -> atomicIncre.work()).start();
         }
-
-        Thread.sleep(500);
-        System.out.println("atomicIncre : " + atomicIncre.getValue());
     }
 
     @Getter
@@ -36,8 +29,11 @@ public class Demo01 {
         int i;
 
         @Override
-        protected void increase() {
-            i++;
+        protected synchronized void increase() {
+            int result = i++;
+            if (result == 9999) {
+                System.out.println("simpleCost : " + (System.currentTimeMillis() - start));
+            }
         }
 
         @Override
@@ -57,7 +53,10 @@ public class Demo01 {
 
         @Override
         protected void increase() {
-            i.getAndIncrement();
+            int result = i.getAndIncrement();
+            if (result == 9999) {
+                System.out.println("atomicCost : " + (System.currentTimeMillis() - start));
+            }
         }
     }
 }
