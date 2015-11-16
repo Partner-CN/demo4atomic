@@ -7,11 +7,13 @@ import lombok.Setter;
 
 public class Demo01 {
 
-    public static void main(String[] args) {
-        Increaser increaser = new UseAtomic();
-        for (int i = 0; i < 10000; i++) {
+    public static void main(String[] args) throws InterruptedException {
+        Increaser increaser = new NoAtomic();
+        for (int i = 0; i < 100; i++) {
             new Thread(() -> increaser.work()).start();
         }
+
+        Thread.sleep(500);
         System.out.println(increaser.getValue());
     }
 }
@@ -24,9 +26,9 @@ abstract class Increaser {
     protected abstract void increase();
 
     public void work() {
-//        for (int j = 0; j < 1000; j++) {
+        for (int j = 0; j < 1000; j++) {
             increase();
-//        }
+        }
     }
 }
 
