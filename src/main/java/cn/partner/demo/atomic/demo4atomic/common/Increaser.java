@@ -12,7 +12,7 @@ public abstract class Increaser {
     protected abstract void increase();
 
     public void work() {
-        for (int j = 0; j < 1000; j++) {
+        for (int j = 0; j < 10000; j++) {
             increase();
         }
     }
