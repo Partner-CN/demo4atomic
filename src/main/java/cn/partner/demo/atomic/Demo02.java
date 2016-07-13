@@ -1,10 +1,10 @@
-package cn.partner.demo.atomic.demo4atomic;
+package cn.partner.demo.atomic;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 import lombok.Getter;
 import lombok.Setter;
-import cn.partner.demo.atomic.demo4atomic.common.Increaser;
+import cn.partner.demo.atomic.common.Increaser;
 
 /**
  * compare atomic and simple i++ with synchronized

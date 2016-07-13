@@ -1,4 +1,4 @@
-package cn.partner.demo.atomic.demo4atomic.common;
+package cn.partner.demo.atomic.common;
 
 public abstract class Increaser {
     protected long start;
